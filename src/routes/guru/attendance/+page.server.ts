@@ -8,9 +8,10 @@ import type { Actions, PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ locals, url }) => {
 	const tenant = requireTenant(locals);
 	const day = parseDateInput(url.searchParams.get('date'));
+	const classId = url.searchParams.get('class') ? Number(url.searchParams.get('class')) : undefined;
 	const { start, end } = dayRange(day);
 
-	const [rows, rollCall] = await Promise.all([
+	const [rows, classList, rollCall] = await Promise.all([
 		locals.db
 			.select({
 				id: attendance.id,
@@ -29,13 +30,18 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 				and(eq(attendance.tenantId, tenant.id), gte(attendance.date, start), lt(attendance.date, end))
 			)
 			.orderBy(asc(users.fullName)),
-		getRollCall(locals.db, tenant.id, day)
+		locals.db
+			.select({ id: classes.id, name: classes.name })
+			.from(classes)
+			.where(eq(classes.tenantId, tenant.id))
+			.orderBy(asc(classes.name)),
+		getRollCall(locals.db, tenant.id, day, classId)
 	]);
 
 	const summary = { hadir: 0, izin: 0, sakit: 0, alpa: 0 } as Record<string, number>;
 	for (const r of rows) summary[r.status] = (summary[r.status] ?? 0) + 1;
 
-	return { date: formatDateInput(day), rows, summary, rollCall };
+	return { date: formatDateInput(day), classId: classId ?? null, rows, summary, classList, rollCall };
 };
 
 export const actions: Actions = {

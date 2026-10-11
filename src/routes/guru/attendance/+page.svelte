@@ -23,6 +23,13 @@
 			<label for="date">Tanggal</label>
 			<input id="date" type="date" name="date" value={data.date} />
 		</div>
+		<div class="field" style="margin:0; min-width:180px;">
+			<label for="class">Kelas</label>
+			<select id="class" name="class">
+				<option value="">— semua kelas —</option>
+				{#each data.classList as c (c.id)}<option value={c.id} selected={data.classId === c.id}>{c.name}</option>{/each}
+			</select>
+		</div>
 		<button type="submit">Tampilkan</button>
 	</form>
 </div>
@@ -55,14 +62,13 @@
 								<td>{s.className ?? '-'}</td>
 								<td>
 									<select name="status_{s.id}">
-										<option value="">—</option>
 										{#each ['hadir', 'izin', 'sakit', 'alpa'] as st (st)}
-											<option value={st} selected={s.record?.status === st}>{st}</option>
+											<option value={st} selected={s.record?.status === st || (!s.record && st === 'hadir')}>{st}</option>
 										{/each}
 									</select>
 								</td>
-								<td><input type="time" name="in_{s.id}" value={timeOf(s.record?.checkInAt)} /></td>
-								<td><input type="time" name="out_{s.id}" value={timeOf(s.record?.checkOutAt)} /></td>
+								<td><input type="time" name="in_{s.id}" value={timeOf(s.record?.checkInAt) || '07:00'} /></td>
+								<td><input type="time" name="out_{s.id}" value={timeOf(s.record?.checkOutAt) || '15:30'} /></td>
 								<td><input type="text" name="notes_{s.id}" value={s.record?.notes ?? ''} placeholder="catatan" /></td>
 							</tr>
 						{/each}
