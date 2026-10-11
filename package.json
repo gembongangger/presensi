@@ -34,7 +34,8 @@
 		"svelte-check": "^4.7.6",
 		"tsx": "^4.23.15",
 		"typescript": "^6.0.3",
-		"vite": "^8.3.4"
+		"vite": "^8.3.4",
+		"wrangler": "^4.149.0"
 	},
 	"imports": {
 		"#lib": "./src/lib/index.js",
