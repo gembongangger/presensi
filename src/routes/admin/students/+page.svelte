@@ -18,14 +18,14 @@
 		<div class="form-row">
 			<div class="field"><label for="nis">NIS</label><input id="nis" name="nis" /></div>
 			<div class="field"><label for="nisn">NISN</label><input id="nisn" name="nisn" /></div>
-			<div class="field"><label for="divisi">Divisi</label>
-				{#if data.divisions && data.divisions.length > 0}
-					<select id="divisi" name="divisi">
-						<option value="">— pilih divisi —</option>
-						{#each data.divisions as d (d)}<option value={d}>{d}</option>{/each}
-					</select>
-				{:else}
-					<input id="divisi" name="divisi" placeholder="Reguler / IPA / Tahfidz" />
+			<div class="field">
+				<label for="divisi">Divisi</label>
+				<select id="divisi" name="divisi">
+					<option value="">— pilih divisi —</option>
+					{#each data.divisions as d (d)}<option value={d}>{d}</option>{/each}
+				</select>
+				{#if !data.divisions || data.divisions.length === 0}
+					<p class="muted">Belum ada divisi. Tambahkan lewat <a href="/admin/settings">Pengaturan</a>.</p>
 				{/if}
 			</div>
 		</div>
