@@ -38,10 +38,10 @@ async function resolveD1(platform?: App.Platform): Promise<D1Database | undefine
 	const direct = platform?.env?.DB;
 	if (isD1(direct)) return direct;
 	try {
-		const { env } = (await import(/* @vite-ignore */ 'cloudflare:workers')) as {
-			env: App.Platform['env'];
-		};
-		if (isD1(env.DB)) return env.DB;
+		// @ts-expect-error virtual module provided by Cloudflare runtime
+		const mod = await import('cloudflare:workers');
+		const env = mod?.env as App.Platform['env'] | undefined;
+		if (env && isD1(env.DB)) return env.DB;
 	} catch {
 		// not running inside Workerd — local dev
 	}

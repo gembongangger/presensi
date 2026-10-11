@@ -1,7 +1,7 @@
 import { fail } from '@sveltejs/kit';
 import { asc, eq } from 'drizzle-orm';
 import { z } from 'zod';
-import { classes, students, tenantUsers, users } from '#lib/schema';
+import { classes, settings, students, tenantUsers, users } from '#lib/schema';
 import { requireTenant } from '#lib/server/tenant';
 import { hashPassword } from '#lib/server/auth/password';
 import type { Actions, PageServerLoad } from './$types';
@@ -20,7 +20,7 @@ const schema = z.object({
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const tenant = requireTenant(locals);
-	const [list, classList] = await Promise.all([
+	const [list, classList, cfg] = await Promise.all([
 		locals.db
 			.select({
 				id: students.id,
@@ -40,9 +40,23 @@ export const load: PageServerLoad = async ({ locals }) => {
 			.select({ id: classes.id, name: classes.name })
 			.from(classes)
 			.where(eq(classes.tenantId, tenant.id))
-			.orderBy(asc(classes.name))
+			.orderBy(asc(classes.name)),
+		locals.db
+			.select({ divisions: settings.divisions })
+			.from(settings)
+			.where(eq(settings.tenantId, tenant.id))
+			.limit(1)
 	]);
-	return { students: list, classes: classList };
+
+	function parseDivisions(s?: string | null) {
+		if (!s) return [] as string[];
+		return s
+			.split(/[,\n\r]+/)
+			.map((x) => x.trim())
+			.filter(Boolean);
+	}
+
+	return { students: list, classes: classList, divisions: parseDivisions(cfg[0]?.divisions) };
 };
 
 export const actions: Actions = {

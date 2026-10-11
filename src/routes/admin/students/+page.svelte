@@ -18,7 +18,16 @@
 		<div class="form-row">
 			<div class="field"><label for="nis">NIS</label><input id="nis" name="nis" /></div>
 			<div class="field"><label for="nisn">NISN</label><input id="nisn" name="nisn" /></div>
-			<div class="field"><label for="divisi">Divisi</label><input id="divisi" name="divisi" placeholder="Reguler / IPA / Tahfidz" /></div>
+			<div class="field"><label for="divisi">Divisi</label>
+				{#if data.divisions && data.divisions.length > 0}
+					<select id="divisi" name="divisi">
+						<option value="">— pilih divisi —</option>
+						{#each data.divisions as d (d)}<option value={d}>{d}</option>{/each}
+					</select>
+				{:else}
+					<input id="divisi" name="divisi" placeholder="Reguler / IPA / Tahfidz" />
+				{/if}
+			</div>
 		</div>
 		<div class="form-row">
 			<div class="field">

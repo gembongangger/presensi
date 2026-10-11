@@ -10,6 +10,7 @@ export const settings = sqliteTable('settings', {
 	lat: real('lat'),
 	lng: real('lng'),
 	radius: real('radius').default(100), // meters
+	divisions: text('divisions'), // comma or newline separated list of divisions
 	workingHoursStart: text('working_hours_start'), // HH:MM
 	workingHoursEnd: text('working_hours_end')
 });

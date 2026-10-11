@@ -68,6 +68,11 @@
 				<input id="workingHoursEnd" name="workingHoursEnd" type="time" value={s.workingHoursEnd ?? '15:00'} />
 			</div>
 		</div>
+		<div class="field">
+			<label for="divisions">Daftar Divisi (opsional)</label>
+			<textarea id="divisions" name="divisions" rows="2" placeholder="Contoh: Reguler, IPA, IPS, Tahfidz">{s.divisions ?? ''}</textarea>
+			<p class="muted">Pisahkan dengan koma atau baris baru. Ini akan muncul sebagai opsi di form tambah siswa.</p>
+		</div>
 	</div>
 
 	<div class="card">

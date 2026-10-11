@@ -53,6 +53,7 @@ export const actions: Actions = {
 				lat,
 				lng,
 				radius: radius ?? 100,
+				divisions: String(form.get('divisions') ?? '').trim() || null,
 				workingHoursStart: String(form.get('workingHoursStart') ?? '').trim() || null,
 				workingHoursEnd: String(form.get('workingHoursEnd') ?? '').trim() || null
 			})
