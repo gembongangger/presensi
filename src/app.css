@@ -351,6 +351,10 @@ th {
 }
 
 @media (max-width: 899px) {
+	body {
+		font-size: 16px;
+	}
+
 	.app-shell {
 		display: block;
 	}
