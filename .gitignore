@@ -12,3 +12,5 @@ data/app.db-wal
 .wrangler
 .env
 .dev.vars
+bun.lock
+bun.lockb

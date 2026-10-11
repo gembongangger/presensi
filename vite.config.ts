@@ -3,7 +3,11 @@ import { defineConfig } from 'vite';
 import adapterAuto from '@sveltejs/adapter-auto';
 import adapterCloudflare from '@sveltejs/adapter-cloudflare';
 
-const useCloudflare = process.env.ADAPTER === 'cloudflare';
+const useCloudflare =
+	process.env.ADAPTER === 'cloudflare' ||
+	!!process.env.CF_PAGES ||
+	!!process.env.WORKERS_CI ||
+	!!process.env.CI;
 
 export default defineConfig({
 	plugins: [
@@ -19,7 +23,7 @@ export default defineConfig({
 			// better-sqlite3.
 			adapter: useCloudflare
 				? adapterCloudflare({
-						platformProxy: { configPath: 'wrangler.toml', persist: true }
+						platformProxy: { configPath: 'wrangler.jsonc', persist: true }
 					})
 				: adapterAuto()
 		})
