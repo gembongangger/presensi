@@ -1,20 +1,11 @@
 {
   "name": "presensi",
-  "main": ".svelte-kit/cloudflare/_worker.js",
+  "main": "./.svelte-kit/cloudflare/_worker.js",
   "compatibility_date": "2026-01-01",
   "compatibility_flags": ["nodejs_compat"],
-  "assets": {
-    "directory": ".svelte-kit/cloudflare",
-    "binding": "ASSETS"
-  },
+  "assets": { "directory": "./.svelte-kit/cloudflare", "binding": "ASSETS" },
   "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "presensi_db",
-      "database_id": "986c3cc4-aafc-43a3-8863-ac0396d76191"
-    }
+    { "binding": "DB", "database_name": "presensi_db", "database_id": "986c3cc4-aafc-43a3-8863-ac0396d76191" }
   ],
-  "observability": {
-    "enabled": true
-  }
+  "observability": { "enabled": true }
 }
