@@ -13,3 +13,4 @@ data/app.db-wal
 .env
 .dev.vars
 bun.lock
+bun.lockb
