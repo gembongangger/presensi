@@ -1,0 +1,49 @@
+{
+	"name": "presensi",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"db:generate": "drizzle-kit generate",
+		"db:migrate": "tsx src/lib/db/migrate.ts",
+		"db:seed": "tsx src/lib/db/seed.ts",
+		"db:studio": "drizzle-kit studio",
+		"db:export:d1": "tsx src/lib/db/export-d1.ts",
+		"db:migrate:d1": "for f in src/lib/db/drizzle/*.sql; do npx wrangler d1 execute presensi_db --file=\"$f\" || exit 1; done",
+		"db:migrate:d1:remote": "for f in src/lib/db/drizzle/*.sql; do npx wrangler d1 execute presensi_db --remote --file=\"$f\" || exit 1; done",
+		"db:seed:d1": "npm run db:export:d1 && npx wrangler d1 execute presensi_db --file=seed-d1.sql",
+		"db:seed:d1:remote": "npm run db:export:d1 && npx wrangler d1 execute presensi_db --remote --file=seed-d1.sql",
+		"build:cloudflare": "ADAPTER=cloudflare vite build",
+		"deploy:cloudflare": "ADAPTER=cloudflare vite build && npx wrangler deploy"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^5.20261007.1",
+		"@sveltejs/adapter-auto": "^8.0.0",
+		"@sveltejs/adapter-cloudflare": "^8.0.0",
+		"@sveltejs/kit": "^3.0.0",
+		"@sveltejs/vite-plugin-svelte": "^7.2.0",
+		"@types/better-sqlite3": "^9.6.0",
+		"drizzle-kit": "^0.31.11",
+		"svelte": "^5.57.1",
+		"svelte-check": "^4.6.0",
+		"tsx": "^4.23.15",
+		"typescript": "^6.0.3",
+		"vite": "^8.3.0"
+	},
+	"imports": {
+		"#lib": "./src/lib/index.js",
+		"#lib/*": "./src/lib/*"
+	},
+	"dependencies": {
+		"better-sqlite3": "^13.0.3",
+		"drizzle-orm": "^0.45.3",
+		"jose": "^6.2.12",
+		"zod": "^4.6.5"
+	}
+}

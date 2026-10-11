@@ -1,0 +1,2 @@
+# Variabel rahasia untuk `wrangler dev` (Cloudflare local platform proxy).
+SESSION_SECRET=ubah-secret-ini-menjadi-acak-dan-panjang

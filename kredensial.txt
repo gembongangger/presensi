@@ -1,0 +1,33 @@
+=== KREDENSIAL USER — Aplikasi Presensi ===
+Database: ./data/app.db (SQLite lokal / D1 Cloudflare)
+
+Catatan:
+- Password di database tersimpan sebagai hash (PBKDF2), tidak bisa "dibaca" balik.
+- Nilai di bawah adalah username/password yang dipakai saat seed & pengujian (smoke test).
+- Password akun siswa/wali/guru dibuat oleh ADMIN saat menambah user di halaman admin.
+
+--- SUPERADMIN (akses /superadmin) ---
+Email    : superadmin@presensi.local
+Password : superadmin123
+
+--- LEMBAGA: SMP Cendekia (tenant id 1) ---
+
+[ADMIN] — akses /admin
+Email    : admin@smp.test
+Password : password123
+
+[SISWA] — akses /siswa (presensi GPS)
+Email    : budi@smp.test
+Password : budi12345
+Nama     : Budi Santoso
+
+[WALI / ORANG TUA] — akses /wali (ajukan izin untuk anak)
+Email    : rina@smp.test
+Password : rina12345
+Nama     : Rina Budi
+Anak     : Budi Santoso
+
+[SISWA] — divisi MIPA
+Email    : andi@smp.test
+Password : andi12345
+Nama     : Andi MIPA
